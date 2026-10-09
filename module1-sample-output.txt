@@ -1,0 +1,59 @@
+===== Hostname =====
+technical-test
+===== Uptime =====
+ 12:57:29 up 72 days, 21:50,  3 users,  load average: 0.35, 0.43, 0.53
+===== Top 5 Processes by Memory =====
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root     1249263  8.4 21.5 2455332 749644 ?      Ssl  Aug11 7150:47 /usr/local/bin/k3s server
+pollina+   23785 13.3  9.0 23570352 316588 ?     Ssl  Jul29 13877:31 clickhouse-server --config-file=/etc/clickhouse-server/config.xml
+root     1249281  0.7  2.1 1620260 76280 ?       Sl   Aug11 675:02 containerd 
+472       460976  0.1  1.5 1615140 54852 ?       Ssl  Jul30 141:52 grafana server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini --packaging=docker cfg:default.log.mode=console cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins cfg:default.paths.provisioning=/etc/grafana/provisioning
+root       19075  0.3  1.5 2732688 54072 ?       Ssl  Jul29 353:31 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+===== Disk Usage =====
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              680M  2.8M  677M   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   28G   22G  5.0G  82% /
+tmpfs                              1.7G     0  1.7G   0% /dev/shm
+tmpfs                              1.7G     0  1.7G   0% /tmp
+/dev/sda2                          2.0G  183M  1.7G  11% /boot
+none                               1.0M     0  1.0M   0% /run/credentials/getty@tty6.service
+none                               1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs                              340M  8.0K  340M   1% /run/user/1000
+none                               1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none                               1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+none                               1.0M     0  1.0M   0% /run/credentials/systemd-networkd.service
+tmpfs                              340M  8.0K  340M   1% /run/user/1008
+===== Listening TCP Ports =====
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                                   
+LISTEN 0      4096      127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=413524,fd=20))             
+LISTEN 0      4096       127.0.0.1:10257      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=196))                
+LISTEN 0      4096       127.0.0.1:10256      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=240))                
+LISTEN 0      4096       127.0.0.1:10259      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=228))                
+LISTEN 0      4096       127.0.0.1:10258      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=244))                
+LISTEN 0      4096       127.0.0.1:10249      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=242))                
+LISTEN 0      4096       127.0.0.1:10248      0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=221))                
+LISTEN 0      4096       127.0.0.1:6444       0.0.0.0:*    users:(("k3s-server",pid=1249263,fd=25))                 
+LISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=413524,fd=18))             
+LISTEN 0      4096         0.0.0.0:8123       0.0.0.0:*    users:(("docker-proxy",pid=24082,fd=8))                  
+LISTEN 0      4096         0.0.0.0:8080       0.0.0.0:*    users:(("docker-proxy",pid=889956,fd=8))                 
+LISTEN 0      4096         0.0.0.0:3306       0.0.0.0:*    users:(("docker-proxy",pid=24001,fd=8))                  
+LISTEN 0      4096         0.0.0.0:5432       0.0.0.0:*    users:(("docker-proxy",pid=24042,fd=8))                  
+LISTEN 0      4096         0.0.0.0:9000       0.0.0.0:*    users:(("docker-proxy",pid=24122,fd=8))                  
+LISTEN 0      4096         0.0.0.0:3000       0.0.0.0:*    users:(("docker-proxy",pid=461009,fd=8))                 
+LISTEN 0      4096         0.0.0.0:9090       0.0.0.0:*    users:(("docker-proxy",pid=23852,fd=8))                  
+LISTEN 0      4096         0.0.0.0:9100       0.0.0.0:*    users:(("docker-proxy",pid=23925,fd=8))                  
+LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=413534,fd=3),("systemd",pid=1,fd=206))
+LISTEN 0      4096       127.0.0.1:10010      0.0.0.0:*    users:(("containerd",pid=1249281,fd=90))                 
+LISTEN 0      4096            [::]:8123          [::]:*    users:(("docker-proxy",pid=24094,fd=8))                  
+LISTEN 0      4096            [::]:8080          [::]:*    users:(("docker-proxy",pid=889961,fd=8))                 
+LISTEN 0      4096            [::]:3306          [::]:*    users:(("docker-proxy",pid=24007,fd=8))                  
+LISTEN 0      4096            [::]:5432          [::]:*    users:(("docker-proxy",pid=24047,fd=8))                  
+LISTEN 0      4096            [::]:9000          [::]:*    users:(("docker-proxy",pid=24127,fd=8))                  
+LISTEN 0      4096            [::]:3000          [::]:*    users:(("docker-proxy",pid=461014,fd=8))                 
+LISTEN 0      4096            [::]:9090          [::]:*    users:(("docker-proxy",pid=23866,fd=8))                  
+LISTEN 0      4096            [::]:9100          [::]:*    users:(("docker-proxy",pid=23953,fd=8))                  
+LISTEN 0      4096            [::]:22            [::]:*    users:(("sshd",pid=413534,fd=4),("systemd",pid=1,fd=207))
+LISTEN 0      4096               *:10250            *:*    users:(("k3s-server",pid=1249263,fd=220))                
+LISTEN 0      4096               *:6443             *:*    users:(("k3s-server",pid=1249263,fd=12))                 
+===== Check PostgreSQL Port =====
+Connection to localhost (127.0.0.1) 5432 port [tcp/postgresql] succeeded!

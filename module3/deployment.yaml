@@ -1,0 +1,39 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ledgersvc
+  namespace: cand01
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ledgersvc
+  template:
+    metadata:
+      labels:
+        app: ledgersvc
+    spec:
+      containers:
+        - name: ledgersvc
+          image: ledgersvc:mine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ledgersvc-config
+            - secretRef:
+                name: ledgersvc-secret
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5

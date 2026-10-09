@@ -1,0 +1,19 @@
+.env
+__pycache__/
+*.pyc
+
+# Local secrets and environment files
+.env.*
+!.env.example
+
+# Terraform local files and state
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfvars
+crash.log
+
+# Python test/cache artifacts
+.pytest_cache/
+.coverage
