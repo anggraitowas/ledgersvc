@@ -1,0 +1,31 @@
+ClickHouse:
+Create a `MergeTree` table `page_views(ts DateTime, user_id UInt64, url String)`, insert ~5 rows and run an aggregation:
+docker exec sre-test-infra-clickhouse-1 sh -c \
+  'clickhouse-client --user "$CLICKHOUSE_USER" --password "$CLICKHOUSE_PASSWORD"' <<'SQL'
+CREATE DATABASE IF NOT EXISTS events;
+
+CREATE TABLE IF NOT EXISTS events.page_views
+(
+    ts DateTime,
+    user_id UInt64,
+    url String
+)
+ENGINE = MergeTree
+ORDER BY (ts, user_id);
+
+INSERT INTO events.page_views (ts, user_id, url) VALUES
+    (now() - INTERVAL 10 MINUTE, 101, '/'),
+    (now() - INTERVAL 9 MINUTE, 102, '/products'),
+    (now() - INTERVAL 8 MINUTE, 101, '/'),
+    (now() - INTERVAL 7 MINUTE, 103, '/checkout'),
+    (now() - INTERVAL 6 MINUTE, 104, '/products');
+
+SELECT url, count(*) AS views
+FROM events.page_views
+GROUP BY url
+ORDER BY views DESC, url;
+SQL
+
+
+docker exec sre-test-infra-clickhouse-1 sh -c \
+  'clickhouse-client --user "$CLICKHOUSE_USER" --password "$CLICKHOUSE_PASSWORD" --query "SELECT url, count() AS views FROM events.page_views GROUP BY url ORDER BY views DESC, url FORMAT Pretty"'

@@ -1,0 +1,36 @@
+MySQL Config:
+Create a table `customers(id, name, created_at)` in `appdb` and insert 3 rows:
+docker exec sre-test-infra-mysql-1 sh -c \
+  'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql -uroot' <<'SQL'
+CREATE DATABASE IF NOT EXISTS appdb;
+USE appdb;
+
+CREATE TABLE IF NOT EXISTS customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL
+);
+
+INSERT INTO customers (id, name, created_at)
+VALUES
+    (1, 'Alice', NOW()),
+    (2, 'Bob', NOW() - INTERVAL 3 DAY),
+    (3, 'Charlie', NOW() - INTERVAL 10 DAY)
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    created_at = VALUES(created_at);
+
+SELECT id, name, created_at
+FROM customers
+WHERE created_at >= NOW() - INTERVAL 7 DAY
+ORDER BY created_at;
+SQL
+
+Show a query that returns rows created in the last 7 days:
+docker exec sre-test-infra-mysql-1 sh -c \
+  'MYSQL_PWD="$MYSQL_ROOT_PASSWORD" mysql -uroot appdb -e "
+    SELECT id, name, created_at
+    FROM customers
+    WHERE created_at >= NOW() - INTERVAL 7 DAY
+    ORDER BY created_at;
+  "'

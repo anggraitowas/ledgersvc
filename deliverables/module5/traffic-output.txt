@@ -1,0 +1,6 @@
+/ready HTTP 200
+/balance HTTP 200
+/ready HTTP 200
+/balance HTTP 200
+/ready HTTP 200
+/balance HTTP 200

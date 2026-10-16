@@ -1,0 +1,37 @@
+PostgreSQL Config:
+Insert 3 transfers via the API:
+kubectl exec -it deployment/postgres -n ledgersvc -- \
+  psql -U ledger -d ledger -c "
+    INSERT INTO ledger_entries (amount, ts)
+    VALUES
+      (125.50, NOW() - INTERVAL '2 days'),
+      (200.00, NOW() - INTERVAL '1 day'),
+      (75.25, NOW());
+  "
+
+kubectl exec -it deployment/postgres -n ledgersvc -- \
+  psql -U ledger -d ledger -c \
+  'SELECT id, amount, ts FROM ledger_entries ORDER BY ts;'
+ id | amount |             ts
+----+--------+-----------------------------
+  1 | 125.50 | 2026-10-07 08:21:28.3741+00
+  2 | 200.00 | 2026-10-08 08:21:28.3741+00
+  3 |  75.25 | 2026-10-09 08:21:28.3741+00
+(3 rows)
+
+Write a query that returns the Daily Total of 'amount' grouped by day:
+kubectl exec -it deployment/postgres -n ledgersvc -- \
+  psql -U ledger -d ledger -c "
+    SELECT
+      (ts AT TIME ZONE 'UTC')::date AS day,
+      SUM(amount) AS daily_total
+    FROM ledger_entries
+    GROUP BY (ts AT TIME ZONE 'UTC')::date
+    ORDER BY day;
+  "
+    day     | daily_total
+------------+-------------
+ 2026-10-07 |      125.50
+ 2026-10-08 |      200.00
+ 2026-10-09 |       75.25
+(3 rows)
