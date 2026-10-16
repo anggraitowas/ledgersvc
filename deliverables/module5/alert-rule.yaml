@@ -1,0 +1,125 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: DB-Down
+      folder: SRE - Ledger Service
+      interval: 1m
+      rules:
+        - uid: cfvxzxogitxc0a
+          title: ledgersvc_alerts
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: prometheus
+              model:
+                editorMode: code
+                expr: min_over_time(ledgersvc_db_up{app="ledgersvc", job="ledgersvc", instance="host.docker.internal:30080"}[1m])
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: efvqvgk4irdogc
+          panelId: 6
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: efvqvgk4irdogc
+            __panelId__: "6"
+            Severity: Critical
+            description: Aplikasi ledgersvc tidak dapat terhubung ke database selama 1 menit terakhir.
+            summary: Database connectivity lost
+          isPaused: false
+          notification_settings:
+            receiver: Aditya
+        - uid: ag0ozeyjx1ibkf
+          title: ledgersvcdbdown
+          condition: C
+          data:
+            - refId: ledgersvcdbdown
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: prometheus
+              model:
+                editorMode: code
+                expr: ledgersvc_db_up
+                instant: true
+                intervalMs: 1000
+                legendFormat: __auto
+                maxDataPoints: 43200
+                range: false
+                refId: ledgersvcdbdown
+            - refId: C
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: ledgersvcdbdown
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          noDataState: NoData
+          execErrState: Error
+          for: 5m
+          annotations:
+            description: ""
+            runbook_url: ""
+            summary: ""
+          labels:
+            "": ""
+          isPaused: false
+          notification_settings:
+            receiver: Anggra
